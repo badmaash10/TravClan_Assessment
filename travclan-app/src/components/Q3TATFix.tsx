@@ -3,24 +3,27 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { AlertCircle, Target, Activity, Users, Settings, Briefcase, CheckCircle } from 'lucide-react';
 import DataSources from './DataSources';
 
+// PPT Framework: Balance → Match → Guardrails
 const DIAGNOSIS = [
-  { title: 'Process', desc: 'No SLA defined; no escalation path', icon: <Users size={24} className="text-red-400" /> },
-  { title: 'System', desc: 'Manual follow-up; no auto-reminder', icon: <Settings size={24} className="text-red-400" /> },
-  { title: 'Supplier', desc: 'Specific 20% hotels causing 80% delays', icon: <Briefcase size={24} className="text-red-400" /> }
+  { title: '01 — Balance the Load', desc: 'Map case distribution across execs. One handling 8 cases while another has 2 = bottleneck, not incompetence.', icon: <Users size={24} className="text-red-400" /> },
+  { title: '02 — Match Hotels to Skill', desc: 'Tag hotels as Easy / Moderate / Difficult. Assign hard hotels to experienced senior communicators.', icon: <Settings size={24} className="text-red-400" /> },
+  { title: '03 — Add Guardrails', desc: 'Auto-nudge at T+2hr, flag repeat offenders (3+ failures), daily standups, weekly compliance review.', icon: <Briefcase size={24} className="text-red-400" /> }
 ];
 
 const WEEKS = [
-  { title: 'W1: Diagnose & Define', color: 'border-red-500/50', tasks: ['Pull 60-day data', 'Interview team', 'Define SLA (4hrs/24hrs)', 'Send internal memo'] },
-  { title: 'W2: Fix Suppliers', color: 'border-orange-500/50', tasks: ['72-hr SLA notice to top 10', 'Negotiate auto-confirm blocks', 'Replace worst offenders', 'Activate WhatsApp bot'] },
-  { title: 'W3: Fix Internals', color: 'border-yellow-500/50', tasks: ['Build TAT tracker', 'Auto-escalation rules', 'Agent communication templates', 'Daily 10-min standups'] },
-  { title: 'W4: Measure & Lock', color: 'border-green-500/50', tasks: ['Track compliance daily', 'Gather agent feedback', 'Final supplier review', 'Present results dashboard'] }
+  { title: 'W1: Diagnose', color: 'border-red-500/50', tasks: ['Map full pipeline: how bookings reach each exec', 'Pull 60-day case distribution per team member', 'Identify overloaded vs underutilised execs', 'Re-distribute open cases; build assignment system'] },
+  { title: 'W2: Fix People', color: 'border-orange-500/50', tasks: ['Pull TAT data by hotel; tag Easy/Moderate/Difficult', 'Reassign hard hotels to senior communicators', 'Contact top 10 delayed hotels: 72-hr notice', 'Hotels that don\'t comply → bookings move to alternates'] },
+  { title: 'W3: Fix Process', color: 'border-yellow-500/50', tasks: ['Activate WhatsApp auto-nudge at T+2hr', 'Deploy agent communication templates', 'Replace 3–5 repeat offender hotels', 'Daily 10-min standup begins: open cases + blockers'] },
+  { title: 'W4: Measure', color: 'border-green-500/50', tasks: ['Track TAT compliance daily', 'Report to leadership', 'Hotels with 3+ failures flagged or removed', 'Present before/after dashboard to leadership'] }
 ];
 
 const KPIS = [
   { label: 'TAT Miss Rate', before: '25%', after: '<8%' },
-  { label: 'Avg Confirm Time', before: 'Unknown', after: '< 3 hours' },
-  { label: 'Agent Complaints', before: 'HIGH', after: '↓ 65%' },
-  { label: 'Auto-Confirm Hotels', before: '0', after: '30 Enrolled' }
+  { label: 'Load Balance', before: 'Unknown', after: 'Mapped & Even' },
+  { label: 'Hard Hotels', before: 'Any Exec', after: 'Senior-Assigned' },
+  { label: 'Agent Complaints', before: 'HIGH', after: '↓ 60–70%' },
+  { label: 'Auto-Nudge', before: 'None', after: 'WhatsApp @ T+2hr' },
+  { label: 'Offender Hotels', before: 'Tolerated', after: 'Flagged / Replaced' }
 ];
 
 const Q3_SOURCES = [
@@ -61,7 +64,7 @@ export default function Q3TATFix() {
 
   // Auto-reveal KPIs sequentially when scrolled into view (simulated by timeout here)
   useEffect(() => {
-    if (revealed && kpisRevealed < 4) {
+    if (revealed && kpisRevealed < 6) {
       const timer = setTimeout(() => {
         setKpisRevealed(prev => prev + 1);
       }, 600);
@@ -131,7 +134,7 @@ export default function Q3TATFix() {
               <div className="mb-16">
                 <h4 className="text-xl font-display font-bold text-text-main mb-6 flex items-center gap-2">
                   <Activity size={20} className="text-red-500" />
-                  Root Cause Diagnosis
+                  Approach: Balance → Match → Guardrails
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {DIAGNOSIS.map((item, idx) => (
@@ -143,14 +146,14 @@ export default function Q3TATFix() {
                       className="glass p-6 rounded-xl border border-[rgba(0,0,0,0.05)] hover:border-red-500/30 transition-colors group relative overflow-hidden"
                     >
                       <div className="mb-4">{item.icon}</div>
-                      <h5 className="font-display font-bold text-lg mb-2">{item.title} Layer</h5>
+                      <h5 className="font-display font-bold text-lg mb-2">{item.title}</h5>
                       <p className="text-text-muted text-sm font-medium">{item.desc}</p>
                       
                       {/* Hover Reveal Text */}
                       <div className="absolute inset-0 bg-red-950/90 p-6 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-center">
-                        <span className="text-xs uppercase tracking-widest text-red-400 font-bold mb-2">How to Verify</span>
+                        <span className="text-xs uppercase tracking-widest text-red-400 font-bold mb-2">Key Action</span>
                         <span className="text-sm text-white">
-                          {idx === 0 ? "Interview the confirmations team" : idx === 1 ? "Audit tools/workflow" : "Pull booking data by property"}
+                          {idx === 0 ? "Build a tracker (Sheets/CRM) and redistribute fairly" : idx === 1 ? "Build an internal hotel difficulty index" : "WhatsApp nudge + daily standup + weekly review"}
                         </span>
                       </div>
                     </motion.div>
@@ -203,7 +206,7 @@ export default function Q3TATFix() {
 
               {/* HERO MOMENT: BEFORE/AFTER KPI */}
               <div className="mb-16 relative">
-                {kpisRevealed >= 4 && <Confetti />}
+                {kpisRevealed >= 6 && <Confetti />}
                 
                 <h4 className="text-3xl font-display font-bold text-center mb-4">The <span className="text-green-400">Impact</span></h4>
                 <p className="text-center text-sm text-text-muted mb-8 max-w-2xl mx-auto">

@@ -25,10 +25,11 @@ const Q2_SOURCES = [
   { label: 'Kashi Vishwanath Corridor Impact', url: 'https://organiser.org', detail: '120x foreign tourist growth since 2021 post-corridor' },
 ];
 
+// Net profit per PPT: ₹10,82,364/yr → ~₹90K/mo (Y1 @ 65% occ), ~₹110K/mo (Y2 @ 75% occ)
 const PAYBACK_DATA = Array.from({ length: 24 }, (_, i) => {
   const month = i + 1;
   const isYear2 = month > 12;
-  const monthlyProfit = isYear2 ? 125000 : 106000; 
+  const monthlyProfit = isYear2 ? 110000 : 90000; 
   const cumulative = month * monthlyProfit;
   return {
     month: `M${month}`,
@@ -52,13 +53,13 @@ function Ticker() {
         animate={{ x: [0, -1000] }}
         transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
       >
-        <span className="mx-8 font-mono text-sm tracking-widest uppercase">₹12,74,364 Net Annual Profit</span> • 
-        <span className="mx-8 font-mono text-sm tracking-widest uppercase">16 Months Payback</span> • 
+        <span className="mx-8 font-mono text-sm tracking-widest uppercase">₹10,82,364 Net Annual Profit</span> • 
+        <span className="mx-8 font-mono text-sm tracking-widest uppercase">~19 Months Payback</span> • 
         <span className="mx-8 font-mono text-sm tracking-widest uppercase">6 Rooms in Varanasi</span> • 
         <span className="mx-8 font-mono text-sm tracking-widest uppercase">65% Y1 Occupancy</span> • 
         <span className="mx-8 font-mono text-sm tracking-widest uppercase">₹1,500 ADR</span> •
-        <span className="mx-8 font-mono text-sm tracking-widest uppercase">₹12,74,364 Net Annual Profit</span> • 
-        <span className="mx-8 font-mono text-sm tracking-widest uppercase">16 Months Payback</span>
+        <span className="mx-8 font-mono text-sm tracking-widest uppercase">₹10,82,364 Net Annual Profit</span> • 
+        <span className="mx-8 font-mono text-sm tracking-widest uppercase">~19 Months Payback</span>
       </motion.div>
     </div>
   );
@@ -201,7 +202,7 @@ export default function Q2Hotel() {
               >
                 <h4 className="text-xl font-display font-bold text-text-main mb-8 flex items-center justify-between">
                   <span>Cumulative Profit & Payback Period</span>
-                  <span className="text-sm font-mono text-yellow-500 font-normal tracking-widest bg-yellow-500/10 px-3 py-1 rounded">📍 Payback @ Month 16</span>
+                  <span className="text-sm font-mono text-yellow-500 font-normal tracking-widest bg-yellow-500/10 px-3 py-1 rounded">📍 Payback @ ~Month 19</span>
                 </h4>
                 <div className="w-full h-[300px]">
                   <ResponsiveContainer width="100%" height="100%">
