@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertCircle, Target, Activity, Users, Settings, Briefcase, CheckCircle } from 'lucide-react';
+import DataSources from './DataSources';
 
 const DIAGNOSIS = [
   { title: 'Process', desc: 'No SLA defined; no escalation path', icon: <Users size={24} className="text-red-400" /> },
@@ -20,6 +21,14 @@ const KPIS = [
   { label: 'Avg Confirm Time', before: 'Unknown', after: '< 3 hours' },
   { label: 'Agent Complaints', before: 'HIGH', after: '↓ 65%' },
   { label: 'Auto-Confirm Hotels', before: '0', after: '30 Enrolled' }
+];
+
+const Q3_SOURCES = [
+  { label: 'OTA Industry Standard — PMS Integration', url: 'https://www.siteminder.com', detail: 'Automated confirmations: instant to 30 min via Channel Manager' },
+  { label: 'Booking.com Partner Guidelines', url: 'https://partner.booking.com', detail: 'Preferred Partner SLA: confirmation within 24 hours for manual properties' },
+  { label: 'Phocuswright / SiteMinder Reports', url: 'https://www.siteminder.com', detail: 'Industry best practice: real-time API sync between OTA ↔ PMS' },
+  { label: 'WhatsApp Business API', url: 'https://business.whatsapp.com', detail: 'Automated nudge messaging for supplier follow-up at T+2hrs' },
+  { label: 'TravClan Internal Assessment', detail: '25% TAT miss rate as baseline; 80/20 supplier concentration hypothesis' },
 ];
 
 function Confetti() {
@@ -196,7 +205,11 @@ export default function Q3TATFix() {
               <div className="mb-16 relative">
                 {kpisRevealed >= 4 && <Confetti />}
                 
-                <h4 className="text-3xl font-display font-bold text-center mb-10">The <span className="text-green-400">Impact</span></h4>
+                <h4 className="text-3xl font-display font-bold text-center mb-4">The <span className="text-green-400">Impact</span></h4>
+                <p className="text-center text-sm text-text-muted mb-8 max-w-2xl mx-auto">
+                  <span className="font-semibold text-text-main">Industry benchmark:</span> Automated PMS-connected hotels confirm bookings in <span className="text-green-400 font-semibold">under 30 minutes</span> via real-time API sync.
+                  <span className="block text-[10px] mt-1 opacity-60">Source: SiteMinder / Phocuswright Industry Reports</span>
+                </p>
                 <div className="max-w-4xl mx-auto bg-surface-lowest rounded-2xl border border-[rgba(0,0,0,0.05)] overflow-hidden">
                   
                   {/* Table Header */}
@@ -236,7 +249,8 @@ export default function Q3TATFix() {
                 </div>
               </div>
 
-
+              {/* DATA SOURCES */}
+              <DataSources sources={Q3_SOURCES} accentColor="text-red-400" />
 
             </motion.div>
           )}
