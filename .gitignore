@@ -5,3 +5,10 @@ dist/
 !.env.example
 .DS_Store
 *.local
+
+# Internal docs & planning
+.planning/
+TravClan_Assessment_CharchitSahay.md
+TravClan_FoundersOffice_Assessment_CharchitSahay.md
+TravClan_Website_Prompt.md
+travclan-app/README.md
